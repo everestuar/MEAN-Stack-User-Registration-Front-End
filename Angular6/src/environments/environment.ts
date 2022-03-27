@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://backend.meanstack.internal:80/api'
+  apiBaseUrl: 'https://backend.meanstack.internal:443/api'
 };
 
 /*
