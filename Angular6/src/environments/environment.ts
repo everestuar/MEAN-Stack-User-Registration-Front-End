@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://backend.meanstack.internal:443/api'
+  apiBaseUrl: 'https://backend.forcloudlabs.de:443/api'
 };
 
 /*
