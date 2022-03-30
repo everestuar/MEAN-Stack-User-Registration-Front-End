@@ -25,7 +25,7 @@ phases:
       - docker login -u AWS -p $(aws ecr get-login-password --region $AWS_REGION) $ECR_REPO_URI
       - docker push $ECR_REPO_URI:latest
       - docker push $ECR_REPO_URI:$IMAGE_TAG
-      - printf '[{"name":"mean-stack-front-end", "imageUri":"%s:%s"}]' $ECR_REPO_URI $IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"mean-stack-frontend", "imageUri":"%s:%s"}]' $ECR_REPO_URI $IMAGE_TAG > imagedefinitions.json
       - pwd; ls -al; cat imagedefinitions.json
       - echo Post-Build completed on `date`
 artifacts:
