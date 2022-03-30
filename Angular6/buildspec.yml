@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - env
+      - aws --version
+      - docker login -u $dockerhub_username -p $dockerhub_password
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - env
+  build:
+    commands:
+      - echo "In Build Stage"
+      - echo Build started on `date`
+      - docker build . -t $ECR_REPO_URI:latest
+      - docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$IMAGE_TAG
+      - echo Build completed on `date`
+  post_build:
+    commands:
+      - echo "In Post-Build Stage"
+      - echo Post-Build started on `date`
+      - docker login -u AWS -p $(aws ecr get-login-password --region $AWS_REGION) $ECR_REPO_URI
+      - docker push $ECR_REPO_URI:latest
+      - docker push $ECR_REPO_URI:$IMAGE_TAG
+      - printf '[{"name":"mean-stack-front-end", "imageUri":"%s:%s"}]' $ECR_REPO_URI $IMAGE_TAG > imagedefinitions.json
+      - pwd; ls -al; cat imagedefinitions.json
+      - echo Post-Build completed on `date`
+artifacts:
+  files:
+    - imagedefinitions.json
