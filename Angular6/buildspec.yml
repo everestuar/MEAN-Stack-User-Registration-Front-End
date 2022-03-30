@@ -30,4 +30,4 @@ phases:
       - echo Post-Build completed on `date`
 artifacts:
   files:
-    - imagedefinitions.json
+    - Angular6/imagedefinitions.json
