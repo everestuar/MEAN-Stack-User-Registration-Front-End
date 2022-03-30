@@ -13,6 +13,8 @@ phases:
     commands:
       - echo "In Build Stage"
       - echo Build started on `date`
+      - pwd; ls -al
+      - cd Angular6
       - docker build . -t $ECR_REPO_URI:latest
       - docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$IMAGE_TAG
       - echo Build completed on `date`
